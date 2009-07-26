@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<project name="ecj4ant" default="compile" basedir=".">
+     <!-- properties -->
+     <property name="version"              value="0.1" />
+     <property name="src"                  value="src/" />
+     <property name="build"                value="build" />
+     <property name="classes"              value="${build}/classes" />
+     <property name="pkgbase"              value="org-thiesen-ecj4ant-${version}" />
+
+     <property name="lib.home" value="lib/" />
+
+     <fileset dir="${lib.home}" id="libs">
+        <include name="ant.jar"/>
+	<include name="ecj-3.5.jar"/>
+     </fileset>	
+
+    <path id="compile.classpath">
+       <fileset refid="libs" />
+    </path>
+
+    <target name=".classpath" description="Generate Eclipse .classpath file">
+        <mkdir dir=".eclipse-out"/>
+        <pathconvert property="eclipse.entries" refid="compile.classpath"
+            pathsep="&quot;/&gt;&#10;    &lt;classpathentry kind=&quot;lib&quot; path=&quot;" />
+        <echo file=".classpath"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry excluding="*.svn|.svn/" kind="src" path="${src}"/>
+    <classpathentry kind="lib" path="${eclipse.entries}"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+    <classpathentry kind="output" path=".eclipse-bin"/>
+</classpath>]]>
+        </echo>
+    </target>
+    
+     <target name="prepare">
+        <mkdir dir="${build}" />
+        <mkdir dir="${classes}" />
+     </target>
+
+     <target name="compile" depends="prepare" description="compile it">
+        <javac srcdir="${src}" source="1.5" target="1.5" 
+               destdir="${classes}" debug="on">
+            <compilerarg value="-Xlint:all"/>
+            <classpath>
+                <fileset refid="libs"/>
+            </classpath>
+         </javac>
+     </target>
+     
+     <target name="jar" depends="compile" description="make jar">
+	 <jar jarfile="${build}/${pkgbase}.jar">
+           <fileset dir="${classes}">
+              <include name="**/*.class"/>
+           </fileset>
+        </jar>
+     </target>
+
+     <target name="clean" description="remove">
+        <delete dir="${pkgbase}"/>
+        <delete dir="${classes}"/>
+        <delete dir="${build}"/>
+     </target>
+
+    <target name="use" description="Use the Task" depends="jar">
+        <taskdef name="matacotivu" classname="org.thiesen.matacotivu.MatacotivuTask">
+            <classpath>
+                <fileset refid="libs"/>
+		<fileset dir="${build}">
+		   <include name="**/*.jar" />
+		</fileset>
+            </classpath>
+	</taskdef>
+        <matacotivu>
+           <fileset dir="${classes}">
+              <include name="**/*.class"/>
+           </fileset>
+	</matacotivu>
+    </target>
+
+
+
+</project>
+
+
+
+

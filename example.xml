@@ -1,0 +1,19 @@
+    <taskdef name="ecj4ant" classname="org.thiesen.ecj4ant.EcjTask" >
+      <classpath>
+	<pathelement location="${lib}/org-thiesen-ecj4ant-0.1.jar"/>
+	<pathelement location="${lib}/ecj-3.5.jar"/>
+      </classpath>
+    </taskdef>
+
+        <target name="compile-ecj"  depends="prepare">
+            <ecj4ant classpathref="compile.classpath"
+                failOnError="true"
+		maxWarnings="8"
+		maxErrors="70"
+                >
+                <fileset dir="${src}/java" >
+                    <include name="**/*.java"/>
+                </fileset>
+            </ecj4ant>
+        </target>
+
