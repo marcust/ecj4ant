@@ -152,7 +152,7 @@ public class Options {
                 put( CompilerOptions.OPTION_ReportOverridingPackageDefaultMethod, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportDeprecation, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_ReportDeprecationInDeprecatedCode, CompilerOptions.ENABLED );
-                put( CompilerOptions.OPTION_ReportDeprecationWhenOverridingDeprecatedMethod, CompilerOptions.ENABLED );
+                put( CompilerOptions.OPTION_ReportDeprecationWhenOverridingDeprecatedMethod, CompilerOptions.DISABLED );
                 put( CompilerOptions.OPTION_ReportHiddenCatchBlock, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportUnusedLocal, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportUnusedParameter, CompilerOptions.WARNING );
@@ -193,7 +193,7 @@ public class Options {
                 put( CompilerOptions.OPTION_ReportMissingJavadocCommentsOverriding, CompilerOptions.IGNORE );
                 put( CompilerOptions.OPTION_ReportFinallyBlockNotCompletingNormally, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportUnusedDeclaredThrownException, CompilerOptions.ERROR );
-                put( CompilerOptions.OPTION_ReportUnusedDeclaredThrownExceptionWhenOverriding, CompilerOptions.ERROR );
+                put( CompilerOptions.OPTION_ReportUnusedDeclaredThrownExceptionWhenOverriding, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_ReportUnusedDeclaredThrownExceptionIncludeDocCommentReference, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportUnusedDeclaredThrownExceptionExemptExceptionAndThrowable, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportUnqualifiedFieldAccess, CompilerOptions.IGNORE );
