@@ -93,7 +93,8 @@ public class EcjTask extends Task {
 
     @Override
     public void execute() {
-
+        final long startTime = System.currentTimeMillis();
+        
         final List<String> sourceFilenames = getSourceFilenames();
         final List<String> classPathEntries = getClassPathEntries();
 
@@ -125,7 +126,9 @@ public class EcjTask extends Task {
         environment.cleanup();
 
 
-        log("Compile finished with " + requestor.getErrors() + " errors, " + requestor.getWarnings() + " warnings and " + requestor.getInfos() + " info messages" );
+        final long endTime = System.currentTimeMillis() - startTime;
+        
+        log("Compile finished after " + endTime + "ms with " + requestor.getErrors() + " errors, " + requestor.getWarnings() + " warnings and " + requestor.getInfos() + " info messages" );
 
         checkFailErrors( requestor.getErrors() );
         checkFailWarnings( requestor.getWarnings() );
