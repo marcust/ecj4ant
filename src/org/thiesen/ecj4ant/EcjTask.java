@@ -21,12 +21,19 @@
 package org.thiesen.ecj4ant;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -54,7 +61,8 @@ public class EcjTask extends Task {
     private final List<FileSet> _fileSets;
 
     private String _failOnError;
-
+    private String _config;
+    
     private Path _path;
     
     private String _maxWarnings;
@@ -153,7 +161,9 @@ public class EcjTask extends Task {
     }
 
     private CompilerOptions makeCompilerOptions() {
-        final CompilerOptions retval = new CompilerOptions( Options.saneOptions() );
+        final Map<String, String> compilerOptions = new HashMap<String, String>( Options.saneOptions() );
+        
+        final CompilerOptions retval = new CompilerOptions( compilerOptions );
 
         retval.performMethodsFullRecovery = false;
         retval.performStatementsRecovery = false;
@@ -161,9 +171,36 @@ public class EcjTask extends Task {
         retval.sourceLevel = ClassFileConstants.JDK1_6;
         retval.complianceLevel = ClassFileConstants.JDK1_6;
         
+        retval.set( loadConfig() );
+        
         return retval;
     }
 
+
+    private Map<?,?> loadConfig() {
+        final String filename = getConfig();
+        
+        if ( filename != null ) {
+            
+            final Properties p = new Properties();
+            
+            try {
+                p.load( new FileInputStream( filename ) );
+            
+                return p;
+            
+            } catch ( final FileNotFoundException e ) {
+                throw new BuildException( e ); 
+            
+            } catch ( final IOException e ) {
+                throw new BuildException( e );
+            }
+         
+            
+        }
+        
+        return Collections.emptyMap();
+    }
 
     private List<String> getClassPathEntries() {
         return Arrays.asList( _path.toString().split( ":" ) );
@@ -312,5 +349,14 @@ public class EcjTask extends Task {
     private String getMessage( final Exception ex ) {
         return ex.getMessage() == null ? ex.toString() : ex.getMessage();
     }
+
+    public String getConfig() {
+        return _config;
+    }
+
+    public void setConfig( final String eclipseJdtConfigFile ) {
+        _config = eclipseJdtConfigFile;
+    }
+
 
 }
