@@ -10,6 +10,7 @@
                 failOnError="true"
 		maxWarnings="8"
 		maxErrors="70"
+   	        config="${etc}/org.eclipse.jdt.core.prefs"
                 >
                 <fileset dir="${src}/java" >
                     <include name="**/*.java"/>
