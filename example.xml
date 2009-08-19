@@ -8,9 +8,12 @@
         <target name="compile-ecj"  depends="prepare">
             <ecj4ant classpathref="compile.classpath"
                 failOnError="true"
-		maxWarnings="8"
-		maxErrors="70"
-   	        config="${etc}/org.eclipse.jdt.core.prefs"
+		        maxWarnings="8"
+		        maxErrors="70"
+   	            config="${etc}/org.eclipse.jdt.core.prefs"
+                suppressWarnings="false"
+                suppressErrors="false"
+                suppressInfos="false"
                 >
                 <fileset dir="${src}/java" >
                     <include name="**/*.java"/>

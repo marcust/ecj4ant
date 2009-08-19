@@ -67,7 +67,12 @@ public class EcjTask extends Task {
     
     private String _maxWarnings;
     private String _maxErrors;
-
+    
+    private boolean _suppressWarnings;
+    private boolean _suppressErrors;
+    private boolean _suppressInfos;
+    
+    
     public String getMaxWarnings() {
         return _maxWarnings;
     }
@@ -268,18 +273,26 @@ public class EcjTask extends Task {
 
             @Override
             public void warning( final CategorizedProblem problem ) {
+                if ( isSuppressWarnings() ) {
+                    return;
+                }
                 log( "[WARN] " + createMessage( problem ), Project.MSG_WARN );
             }
 
             @Override
             public void info( final CategorizedProblem problem ) {
+                if ( isSuppressInfos() ) {
+                    return;
+                }
                 log( "[INFO] " + createMessage( problem ), Project.MSG_INFO );
 
             }
 
             @Override
             public void error( final CategorizedProblem problem ) {
-                log( "[ERROR] " + createMessage( problem ), Project.MSG_ERR );
+                if ( isSuppressErrors() ) {
+                    log( "[ERROR] " + createMessage( problem ), Project.MSG_ERR );
+                }
 
             }
 
@@ -356,6 +369,30 @@ public class EcjTask extends Task {
 
     public void setConfig( final String eclipseJdtConfigFile ) {
         _config = eclipseJdtConfigFile;
+    }
+
+    public void setSuppressWarnings( final boolean suppressWarnings ) {
+        _suppressWarnings = suppressWarnings;
+    }
+
+    public boolean isSuppressWarnings() {
+        return _suppressWarnings;
+    }
+
+    public void setSuppressErrors( final boolean suppressErrors ) {
+        _suppressErrors = suppressErrors;
+    }
+
+    public boolean isSuppressErrors() {
+        return _suppressErrors;
+    }
+
+    public void setSuppressInfos( final boolean suppressInfos ) {
+        _suppressInfos = suppressInfos;
+    }
+
+    public boolean isSuppressInfos() {
+        return _suppressInfos;
     }
 
 
