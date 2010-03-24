@@ -28,6 +28,19 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 
 public class Options {
 
+    public static Map<String,String> defaultOptions() {
+        return new HashMap<String,String>() {
+            private static final long serialVersionUID = 1L;
+
+            {
+                put( CompilerOptions.OPTION_Process_Annotations, CompilerOptions.ENABLED );
+                put( CompilerOptions.OPTION_SuppressWarnings, CompilerOptions.ENABLED );
+                put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.ENABLED );
+            }
+
+        };
+    }
+
     public static Map<String,String> warnAllOptions() {
         return new HashMap<String, String>() {
 
@@ -37,7 +50,7 @@ public class Options {
                 put( CompilerOptions.OPTION_Process_Annotations, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_SuppressWarnings, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.ENABLED );
-                
+
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_LineNumberAttribute, CompilerOptions.WARNING );
@@ -124,15 +137,15 @@ public class Options {
                 put( CompilerOptions.OPTION_ReportMissingAnnotation, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportMissingJavadoc, CompilerOptions.WARNING );
 
-                
+
             }
-            
+
         };
-        
-        
+
+
     }
-    
-    
+
+
     public static Map<String,String> saneOptions() {
         return new HashMap<String, String>() {
 
@@ -142,7 +155,7 @@ public class Options {
                 put( CompilerOptions.OPTION_Process_Annotations, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_SuppressWarnings, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.ENABLED );
-                
+
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_LineNumberAttribute, CompilerOptions.ERROR );
@@ -229,12 +242,12 @@ public class Options {
                 put( CompilerOptions.OPTION_ReportMissingAnnotation, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportMissingJavadoc, CompilerOptions.ERROR );
 
-                
+
             }
-            
+
         };
-        
-        
+
+
     }
-    
+
 }

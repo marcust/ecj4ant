@@ -217,7 +217,9 @@ public class EcjTask extends Task {
             try {
                 p.load( new FileInputStream( filename ) );
 
-                final Map<String,String> returnMap = new HashMap<String,String>();
+                final Map<String,String> returnMap = new HashMap<String,String>(
+                        Options.defaultOptions() 
+                );
                 for ( final Entry<Object, Object> entry : p.entrySet() ) {
                     returnMap.put( (String)entry.getKey(), (String)entry.getValue() );
                 }
