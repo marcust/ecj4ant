@@ -27,13 +27,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -166,7 +166,7 @@ public class EcjTask extends Task {
     }
 
     private CompilerOptions makeCompilerOptions() {
-        final Map<String, String> compilerOptions = new HashMap<String, String>( Options.saneOptions() );
+        final Map<String, String> compilerOptions = new HashMap<String, String>( loadConfigWithDefault() );
         
         final CompilerOptions retval = new CompilerOptions( compilerOptions );
 
@@ -176,13 +176,11 @@ public class EcjTask extends Task {
         retval.sourceLevel = ClassFileConstants.JDK1_6;
         retval.complianceLevel = ClassFileConstants.JDK1_6;
         
-        retval.set( loadConfig() );
-        
         return retval;
     }
 
 
-    private Map<?,?> loadConfig() {
+    private Map<String,String> loadConfigWithDefault() {
         final String filename = getConfig();
         
         if ( filename != null ) {
@@ -192,8 +190,12 @@ public class EcjTask extends Task {
             try {
                 p.load( new FileInputStream( filename ) );
             
-                return p;
+                final Map<String,String> returnMap = new HashMap<String,String>();
+                for ( final Entry<Object, Object> entry : p.entrySet() ) {
+                    returnMap.put( (String)entry.getKey(), (String)entry.getValue() );
+                }
             
+                return returnMap;
             } catch ( final FileNotFoundException e ) {
                 throw new BuildException( e ); 
             
@@ -204,7 +206,7 @@ public class EcjTask extends Task {
             
         }
         
-        return Collections.emptyMap();
+        return Options.saneOptions();
     }
 
     private List<String> getClassPathEntries() {
@@ -291,9 +293,10 @@ public class EcjTask extends Task {
             @Override
             public void error( final CategorizedProblem problem ) {
                 if ( isSuppressErrors() ) {
-                    log( "[ERROR] " + createMessage( problem ), Project.MSG_ERR );
+                    return;
                 }
-
+                    
+                log( "[ERROR] " + createMessage( problem ), Project.MSG_ERR );
             }
 
         } );
