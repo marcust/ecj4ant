@@ -6,13 +6,17 @@
      <property name="src"                  value="src/" />
      <property name="build"                value="build" />
      <property name="classes"              value="${build}/classes" />
-     <property name="pkgbase"              value="org-thiesen-ecj4ant-${version}" />
+     <property name="pkgbase"              value="org-thiesen-ecj4ant" />
 
      <property name="lib.home" value="lib/" />
 
      <fileset dir="${lib.home}" id="libs">
         <include name="ant.jar"/>
-	<include name="ecj-3.5.jar"/>
+	<include name="ecj-3.5.2.jar"/>
+        <include name="org-thiesen-gitant-v0.0.7.jar" />
+        <include name="org.eclipse.jgit-0.6.0-SNAPSHOT.jar" />
+       <include name="commons-lang-2.4.jar" />
+       <include name="google-collect-1.0-rc4.jar" />
      </fileset>	
 
     <path id="compile.classpath">
@@ -32,8 +36,22 @@
 </classpath>]]>
         </echo>
     </target>
+
+    <target name="git-info" description="Use the Task">
+        <taskdef name="git-info" classname="org.thiesen.ant.git.ExtractGitInfo">
+            <classpath>
+                <fileset refid="libs"/>
+            </classpath>
+	</taskdef>
+        <git-info 
+           baseDir=".git"
+           propertyPrefix=""
+           displayInfo="true"
+           /> 
+    </target>
+
     
-     <target name="prepare">
+     <target name="prepare" depends="git-info">
         <mkdir dir="${build}" />
         <mkdir dir="${classes}" />
      </target>
@@ -49,10 +67,20 @@
      </target>
      
      <target name="jar" depends="compile" description="make jar">
-	 <jar jarfile="${build}/${pkgbase}.jar">
+	 <jar jarfile="${build}/${pkgbase}-${git.version}.jar">
            <fileset dir="${classes}">
               <include name="**/*.class"/>
            </fileset>
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Git-Branch" value="${git.branch}" />
+                <attribute name="Git-Workingcopy-Dirty" value="${git.workingcopy.dirty}" />
+                <attribute name="Git-Commit" value="${git.commit}" />
+                <attribute name="Git-Tag" value="${git.tag}" />
+                <attribute name="Git-Tag-Author-Name" value="${git.tag.author.name}" />
+                <attribute name="Git-Tag-Author-Email" value="${git.tag.author.email}" />
+                <attribute name="Git-Tag-Dirty" value="${git.tag.dirty}" />
+            </manifest>
         </jar>
      </target>
 
