@@ -43,7 +43,6 @@ public class Options {
                 put( CompilerOptions.OPTION_LineNumberAttribute, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_SourceFileAttribute, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_PreserveUnusedLocal, CompilerOptions.WARNING );
-                put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportMethodWithConstructorName, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportOverridingPackageDefaultMethod, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportDeprecation, CompilerOptions.WARNING );
@@ -149,7 +148,6 @@ public class Options {
                 put( CompilerOptions.OPTION_LineNumberAttribute, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_SourceFileAttribute, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_PreserveUnusedLocal, CompilerOptions.ERROR );
-                put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportMethodWithConstructorName, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportOverridingPackageDefaultMethod, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportDeprecation, CompilerOptions.ENABLED );
