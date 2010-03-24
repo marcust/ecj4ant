@@ -36,6 +36,7 @@ public class Options {
             {
                 put( CompilerOptions.OPTION_Process_Annotations, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_SuppressWarnings, CompilerOptions.ENABLED );
+                put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.ENABLED );
                 
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.WARNING );
@@ -141,6 +142,7 @@ public class Options {
             {
                 put( CompilerOptions.OPTION_Process_Annotations, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_SuppressWarnings, CompilerOptions.ENABLED );
+                put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.ENABLED );
                 
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_LocalVariableAttribute, CompilerOptions.ERROR );
