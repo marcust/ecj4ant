@@ -28,7 +28,6 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -194,7 +193,7 @@ public class EcjTask extends Task {
     }
 
     private CompilerOptions makeCompilerOptions() {
-        final Map<String, String> compilerOptions = new HashMap<String, String>( Options.saneOptions() );
+        final Map<String, String> compilerOptions = new HashMap<String, String>( loadConfigWithDefaults() );
 
         final CompilerOptions retval = new CompilerOptions( compilerOptions );
 
@@ -204,13 +203,11 @@ public class EcjTask extends Task {
         retval.sourceLevel = ClassFileConstants.JDK1_6;
         retval.complianceLevel = ClassFileConstants.JDK1_6;
 
-        retval.set( loadConfig() );
-
         return retval;
     }
 
 
-    private Map<String,String> loadConfig() {
+    private Map<String,String> loadConfigWithDefaults() {
         final String filename = getConfig();
 
         if ( filename != null ) {
@@ -236,7 +233,7 @@ public class EcjTask extends Task {
 
         }
 
-        return Collections.emptyMap();
+        return Options.saneOptions();
     }
 
     private List<String> getClassPathEntries() {
