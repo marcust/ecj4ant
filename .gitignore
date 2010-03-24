@@ -5,3 +5,4 @@ build
 .ant-targets-build.xml
 .settings
 bin
+.ant-targets-example.xml

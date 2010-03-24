@@ -25,8 +25,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,6 +37,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -62,17 +67,17 @@ public class EcjTask extends Task {
 
     private String _failOnError;
     private String _config;
-    
+
     private Path _path;
-    
+
     private String _maxWarnings;
     private String _maxErrors;
-    
+
     private boolean _suppressWarnings;
     private boolean _suppressErrors;
     private boolean _suppressInfos;
-    
-    
+
+
     public String getMaxWarnings() {
         return _maxWarnings;
     }
@@ -98,16 +103,39 @@ public class EcjTask extends Task {
         batchCompilerMain.initPaths();
         _baseClasspath = batchCompilerMain.getCheckedClasspaths();
 
-        log( "Ecj4Ant - 2009 by Marcus Thiesen (marcus@thiesen.org)" );
+        log( "Ecj4Ant " + loadVersion() + " - 2009-2010 by Marcus Thiesen (marcus@thiesen.org)" );
         log( "Using " + batchCompilerMain.bind("compiler.name") + " " +  
                 batchCompilerMain.bind("compiler.version") +  " " +
                 batchCompilerMain.bind("compiler.copyright" ) );
     }
 
+    private String loadVersion() {
+        try {
+            final Enumeration<URL> resources = getClass().getClassLoader()
+            .getResources("META-INF/MANIFEST.MF");
+            while (resources.hasMoreElements()) {
+
+                final Manifest manifest = new Manifest(resources.nextElement().openStream());
+
+                final Attributes mainAttributes = manifest.getMainAttributes();
+                
+                if ("ecj4ant".equalsIgnoreCase( mainAttributes.getValue( "Project-Name" ) ) ) {
+                    return mainAttributes.getValue( "Git-Version" );
+                }
+
+            }
+
+        } catch (final IOException E) {
+            // do nothing
+        }
+        return "unknown version";
+
+    }
+
     @Override
     public void execute() {
         final long startTime = System.currentTimeMillis();
-        
+
         final List<String> sourceFilenames = getSourceFilenames();
         final List<String> classPathEntries = getClassPathEntries();
 
@@ -118,7 +146,7 @@ public class EcjTask extends Task {
         final CompilerOptions compilerOptions = makeCompilerOptions();
 
         log( compilerOptions.toString(), Project.MSG_VERBOSE );
-        
+
         final BatchRequestor requestor = getBatchRequestor();
 
         final Compiler batchCompiler =
@@ -140,13 +168,13 @@ public class EcjTask extends Task {
 
 
         final long endTime = System.currentTimeMillis() - startTime;
-        
+
         log("Compile finished after " + endTime + "ms with " + requestor.getErrors() + " errors, " + requestor.getWarnings() + " warnings and " + requestor.getInfos() + " info messages" );
 
         checkFailErrors( requestor.getErrors() );
         checkFailWarnings( requestor.getWarnings() );
     }
-    
+
     private void checkFailWarnings( final int warnings ) {
         final String maxWarnings = getMaxWarnings();
         checkConfigOption( warnings, maxWarnings, "More warnings than specified max warnings"  );
@@ -166,47 +194,49 @@ public class EcjTask extends Task {
     }
 
     private CompilerOptions makeCompilerOptions() {
-        final Map<String, String> compilerOptions = new HashMap<String, String>( loadConfigWithDefault() );
-        
+        final Map<String, String> compilerOptions = new HashMap<String, String>( Options.saneOptions() );
+
         final CompilerOptions retval = new CompilerOptions( compilerOptions );
 
         retval.performMethodsFullRecovery = false;
         retval.performStatementsRecovery = false;
-        
+
         retval.sourceLevel = ClassFileConstants.JDK1_6;
         retval.complianceLevel = ClassFileConstants.JDK1_6;
-        
+
+        retval.set( loadConfig() );
+
         return retval;
     }
 
 
-    private Map<String,String> loadConfigWithDefault() {
+    private Map<String,String> loadConfig() {
         final String filename = getConfig();
-        
+
         if ( filename != null ) {
-            
+
             final Properties p = new Properties();
-            
+
             try {
                 p.load( new FileInputStream( filename ) );
-            
+
                 final Map<String,String> returnMap = new HashMap<String,String>();
                 for ( final Entry<Object, Object> entry : p.entrySet() ) {
                     returnMap.put( (String)entry.getKey(), (String)entry.getValue() );
                 }
-            
+
                 return returnMap;
             } catch ( final FileNotFoundException e ) {
                 throw new BuildException( e ); 
-            
+
             } catch ( final IOException e ) {
                 throw new BuildException( e );
             }
-         
-            
+
+
         }
-        
-        return Options.saneOptions();
+
+        return Collections.emptyMap();
     }
 
     private List<String> getClassPathEntries() {
@@ -295,7 +325,7 @@ public class EcjTask extends Task {
                 if ( isSuppressErrors() ) {
                     return;
                 }
-                    
+
                 log( "[ERROR] " + createMessage( problem ), Project.MSG_ERR );
             }
 

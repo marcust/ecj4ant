@@ -1,11 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<project name="ecj4ant" default="compile-ecj" basedir=".">
+     <!-- properties -->
+     <property name="src"                  value="src/" />
+     <property name="build"                value="build" />
+     <property name="classes"              value="${build}/classes" />
+     <property name="pkgbase"              value="org-thiesen-ecj4ant" />
+
+     <property name="lib" value="lib/" />
+
     <taskdef name="ecj4ant" classname="org.thiesen.ecj4ant.EcjTask" >
       <classpath>
-	<pathelement location="${lib}/org-thiesen-ecj4ant-0.1.jar"/>
-	<pathelement location="${lib}/ecj-3.5.jar"/>
+	<pathelement location="build/org-thiesen-ecj4ant-SNAPSHOT.jar"/>
+	<pathelement location="${lib}/ecj-3.5.2.jar"/>
       </classpath>
     </taskdef>
 
-        <target name="compile-ecj"  depends="prepare">
+        <target name="compile-ecj">
             <ecj4ant classpathref="compile.classpath"
                 failOnError="true"
 		        maxWarnings="8"
@@ -21,3 +32,4 @@
             </ecj4ant>
         </target>
 
+</project>
