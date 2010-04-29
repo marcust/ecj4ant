@@ -346,11 +346,11 @@ public class EcjTask extends Task {
     private String[] convertAndCombine( final Classpath[] baseClasspath, final List<String> classPathEntries ) {
         final List<String> entries = new LinkedList<String>();
 
+        entries.addAll( classPathEntries );
+        
         for ( final Classpath classpath : baseClasspath ) {
             entries.add( classpath.getPath() );
         }
-
-        entries.addAll( classPathEntries );
 
         return entries.toArray( new String[0] );
     }
