@@ -133,10 +133,6 @@ public class Options {
                 put( CompilerOptions.OPTION_ReportMissingHashCodeMethod, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportDeadCode, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportDeadCodeInTrivialIfStatement, CompilerOptions.WARNING );
-                put( CompilerOptions.OPTION_ReportInvalidAnnotation, CompilerOptions.WARNING );
-                put( CompilerOptions.OPTION_ReportMissingAnnotation, CompilerOptions.WARNING );
-                put( CompilerOptions.OPTION_ReportMissingJavadoc, CompilerOptions.WARNING );
-
 
             }
 
@@ -238,11 +234,6 @@ public class Options {
                 put( CompilerOptions.OPTION_ReportMissingHashCodeMethod, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportDeadCode, CompilerOptions.ERROR );
                 put( CompilerOptions.OPTION_ReportDeadCodeInTrivialIfStatement, CompilerOptions.ERROR );
-                put( CompilerOptions.OPTION_ReportInvalidAnnotation, CompilerOptions.ERROR );
-                put( CompilerOptions.OPTION_ReportMissingAnnotation, CompilerOptions.ERROR );
-                put( CompilerOptions.OPTION_ReportMissingJavadoc, CompilerOptions.ERROR );
-
-
             }
 
         };
