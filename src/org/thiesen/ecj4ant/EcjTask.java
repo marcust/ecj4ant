@@ -53,7 +53,6 @@ import org.eclipse.jdt.internal.compiler.IProblemFactory;
 import org.eclipse.jdt.internal.compiler.batch.CompilationUnit;
 import org.eclipse.jdt.internal.compiler.batch.FileSystem;
 import org.eclipse.jdt.internal.compiler.batch.FileSystem.Classpath;
-import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.eclipse.jdt.internal.compiler.problem.DefaultProblemFactory;
 import org.eclipse.jdt.internal.compiler.util.Util;
@@ -199,9 +198,6 @@ public class EcjTask extends Task {
 
         retval.performMethodsFullRecovery = false;
         retval.performStatementsRecovery = false;
-
-        retval.sourceLevel = ClassFileConstants.JDK1_6;
-        retval.complianceLevel = ClassFileConstants.JDK1_6;
 
         return retval;
     }
