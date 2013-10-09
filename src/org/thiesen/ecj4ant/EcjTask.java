@@ -34,8 +34,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -103,7 +103,7 @@ public class EcjTask extends Task {
         _baseClasspath = batchCompilerMain.getCheckedClasspaths();
 
         log( "Ecj4Ant " + loadVersion() + " - 2009-2010 by Marcus Thiesen (marcus@thiesen.org)" );
-        log( "Using " + batchCompilerMain.bind("compiler.name") + " " +  
+        log( "Using " + batchCompilerMain.bind("compiler.name") + " " +
                 batchCompilerMain.bind("compiler.version") +  " " +
                 batchCompilerMain.bind("compiler.copyright" ) );
     }
@@ -117,7 +117,7 @@ public class EcjTask extends Task {
                 final Manifest manifest = new Manifest(resources.nextElement().openStream());
 
                 final Attributes mainAttributes = manifest.getMainAttributes();
-                
+
                 if ("ecj4ant".equalsIgnoreCase( mainAttributes.getValue( "Project-Name" ) ) ) {
                     return mainAttributes.getValue( "Git-Version" );
                 }
@@ -218,7 +218,7 @@ public class EcjTask extends Task {
                 p.load( new FileInputStream( filename ) );
 
                 final Map<String,String> returnMap = new HashMap<String,String>(
-                        Options.defaultOptions() 
+                        Options.defaultOptions()
                 );
                 for ( final Entry<Object, Object> entry : p.entrySet() ) {
                     returnMap.put( (String)entry.getKey(), (String)entry.getValue() );
@@ -226,7 +226,7 @@ public class EcjTask extends Task {
 
                 return returnMap;
             } catch ( final FileNotFoundException e ) {
-                throw new BuildException( e ); 
+                throw new BuildException( e );
 
             } catch ( final IOException e ) {
                 throw new BuildException( e );
@@ -338,7 +338,7 @@ public class EcjTask extends Task {
 
     public FileSystem getLibraryAccess(final List<String> sourceFilenames, final List<String> classPathEntries) {
 
-        final String[] classPathEntriesArray = convertAndCombine( _baseClasspath, classPathEntries ); 
+        final String[] classPathEntriesArray = convertAndCombine( _baseClasspath, classPathEntries );
 
         return new FileSystem(  classPathEntriesArray , sourceFilenames.toArray(new String[0]), DEFAULT_ENCODING );
     }
@@ -347,7 +347,7 @@ public class EcjTask extends Task {
         final List<String> entries = new LinkedList<String>();
 
         entries.addAll( classPathEntries );
-        
+
         for ( final Classpath classpath : baseClasspath ) {
             entries.add( classpath.getPath() );
         }
