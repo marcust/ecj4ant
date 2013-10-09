@@ -23,6 +23,7 @@ package org.thiesen.ecj4ant;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.jdt.internal.compiler.classfmt.ClassFileConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 
 
@@ -36,6 +37,11 @@ public class Options {
                 put( CompilerOptions.OPTION_Process_Annotations, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_SuppressWarnings, CompilerOptions.ENABLED );
                 put( CompilerOptions.OPTION_DocCommentSupport, CompilerOptions.ENABLED );
+
+                // set the language level to jdk7 (the currently stable version)
+                put( CompilerOptions.OPTION_Compliance, CompilerOptions.versionFromJdkLevel( ClassFileConstants.JDK1_7 ) );
+                put( CompilerOptions.OPTION_Source, CompilerOptions.versionFromJdkLevel( ClassFileConstants.JDK1_7 ) );
+                put( CompilerOptions.OPTION_TargetPlatform, CompilerOptions.versionFromJdkLevel( ClassFileConstants.JDK1_7 ) );
             }
 
         };
