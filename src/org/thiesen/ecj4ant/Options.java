@@ -139,7 +139,6 @@ public class Options {
                 put( CompilerOptions.OPTION_ReportMissingHashCodeMethod, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportDeadCode, CompilerOptions.WARNING );
                 put( CompilerOptions.OPTION_ReportDeadCodeInTrivialIfStatement, CompilerOptions.WARNING );
-
             }
 
         };

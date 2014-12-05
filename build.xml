@@ -11,7 +11,7 @@
 
      <fileset dir="${lib.home}" id="libs">
         <include name="ant.jar"/>
-	<include name="ecj-4.2.jar"/>
+	<include name="ecj-4.4.jar"/>
         <include name="org-thiesen-gitant-v0.0.7.jar" />
         <include name="org.eclipse.jgit-0.6.0-SNAPSHOT.jar" />
        <include name="commons-lang-2.4.jar" />

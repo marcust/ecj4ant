@@ -286,6 +286,9 @@ public class EcjTask extends Task {
             public boolean stopOnFirstError() {
                 return false;
             }
+			public boolean ignoreAllErrors() {
+				return false;
+			}
         };
     }
 
